@@ -48,7 +48,7 @@ public class MainApp {
 
         printHello("Fanzil");
 
-        System.out.println(checkIfNegative(-128) + " must be true");
+        System.out.println(checkIfNegative(-121) + " must be true");
         System.out.println(checkIfNegative(0) + " must be false");
 
         printYearLeap(1974);
