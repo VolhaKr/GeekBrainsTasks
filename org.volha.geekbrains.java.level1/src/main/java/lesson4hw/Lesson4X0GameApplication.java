@@ -11,8 +11,10 @@ public class Lesson4X0GameApplication {
     public static final char DOT_X = 'X';
     public static final char DOT_O = 'O';
     public static char[][] map;
+    public static char[][] mapDraft;
     public static Scanner sc = new Scanner(System.in);
     public static Random rand = new Random();
+    public static int x, y;
 
     public static void main(String[] args) {
         initMap();
@@ -20,7 +22,7 @@ public class Lesson4X0GameApplication {
         while (true) {
             humanTurn();
             printMap();
-            if (checkWin(DOT_X)) {
+            if (checkWin(0, 0, SIZE, DOT_O)) {
                 System.out.println("Победил человек");
                 break;
             }
@@ -30,7 +32,7 @@ public class Lesson4X0GameApplication {
             }
             aiTurn();
             printMap();
-            if (checkWin(DOT_O)) {
+            if (checkWin(0, 0, SIZE, DOT_O)) {
                 System.out.println("Победил Искуственный Интеллект");
                 break;
             }
@@ -42,13 +44,14 @@ public class Lesson4X0GameApplication {
         System.out.println("Игра закончена");
     }
 
-    public static boolean checkWin(char symb) {
-        for ( int i = 0; i < SIZE; i++ ) {
-            for ( int j = 0; j < SIZE; j++ ) {
-                if ((j + DOTS_TO_WIN <= SIZE) && (checkHorizontal(i, j, DOTS_TO_WIN, symb)) ||
-                        (i + DOTS_TO_WIN <= SIZE) && (checkVertical(i, j, DOTS_TO_WIN, symb)) ||
-                        (i - DOTS_TO_WIN >= 0) && (j + DOTS_TO_WIN <= SIZE) && (checkUpDiagonal(i, j, DOTS_TO_WIN, symb)) ||
-                        (i + DOTS_TO_WIN <= SIZE) && (j + DOTS_TO_WIN <= SIZE) && (checkDownDiagonal(i, j, DOTS_TO_WIN, symb))
+    public static boolean checkWin(int iStart, int jStart, int checkSize, char symb) {
+     //   int checkSize = iEnd-iStart+1;
+        for ( int i = iStart; i < checkSize; i++ ) {
+            for ( int j = jStart; j < checkSize; j++ ) {
+                if ((j + DOTS_TO_WIN <= checkSize) && (checkHorizontal(i, j, DOTS_TO_WIN, symb)) ||
+                        (i + DOTS_TO_WIN <= checkSize) && (checkVertical(i, j, DOTS_TO_WIN, symb)) ||
+                        (i - DOTS_TO_WIN >= 0) && (j + DOTS_TO_WIN <= checkSize) && (checkUpDiagonal(i, j, DOTS_TO_WIN, symb)) ||
+                        (i + DOTS_TO_WIN <= checkSize) && (j + DOTS_TO_WIN <= checkSize) && (checkDownDiagonal(i, j, DOTS_TO_WIN, symb))
                 ) {
                     return true;
                 }
@@ -57,8 +60,8 @@ public class Lesson4X0GameApplication {
         return false;
     }
 
-    private static boolean checkHorizontal(int i, int j, int DOTS_TO_WIN, char symb) {
-        for ( int k = 0; (k < DOTS_TO_WIN); k++ ) {
+    private static boolean checkHorizontal(int i, int j, int dotsToWin, char symb) {
+        for ( int k = 0; k < dotsToWin; k++ ) {
             if (map[i][j + k] != symb) {
                 return false;
             }
@@ -66,8 +69,8 @@ public class Lesson4X0GameApplication {
         return true;
     }
 
-    private static boolean checkVertical(int i, int j, int DOTS_TO_WIN, char symb) {
-        for ( int k = 0; (k < DOTS_TO_WIN); k++ ) {
+    private static boolean checkVertical(int i, int j, int dotsToWin, char symb) {
+        for ( int k = 0; k < dotsToWin; k++ ) {
             if (map[i + k][j] != symb) {
                 return false;
             }
@@ -76,7 +79,7 @@ public class Lesson4X0GameApplication {
     }
 
     private static boolean checkUpDiagonal(int i, int j, int dotsToWin, char symb) {
-        for ( int k = 0; (k < DOTS_TO_WIN); k++ ) {
+        for ( int k = 0; k < dotsToWin; k++ ) {
             if (map[i - k][j + k] != symb) {
                 return false;
             }
@@ -85,12 +88,49 @@ public class Lesson4X0GameApplication {
     }
 
     private static boolean checkDownDiagonal(int i, int j, int dotsToWin, char symb) {
-        for ( int k = 0; (k < DOTS_TO_WIN); k++ ) {
+        for ( int k = 0; k < dotsToWin; k++ ) {
             if (map[i + k][j + k] != symb) {
                 return false;
             }
         }
         return true;
+    }
+
+    public static boolean tryToWin(char symb) {
+        for ( int i = 0; i < map.length; i++ ) {
+            for ( int j = 0; j < map.length; j++ ) {
+                if (map[i][j] == DOT_EMPTY) {
+                    map[i][j] = DOT_O;
+                    if (checkWin(Math.max(0,i - DOTS_TO_WIN + 1), Math.max(0,j - DOTS_TO_WIN + 1), DOTS_TO_WIN * 2 - 1, symb)) {
+                        y=i;
+                        x=j;
+                        return true;
+                    } else {
+                        map[i][j] = DOT_EMPTY;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean tryToBlockWin(char playerSymb, char opponentSymb) {
+        for ( int i = 0; i < map.length; i++ ) {
+            for ( int j = 0; j < map.length; j++ ) {
+                if (map[i][j] == DOT_EMPTY) {
+                    map[i][j] = opponentSymb;
+                    if (checkWin(Math.max(0,i - DOTS_TO_WIN + 1), Math.max(0,j - DOTS_TO_WIN + 1), DOTS_TO_WIN * 2 - 1, opponentSymb)) {
+                        map[i][j] = playerSymb;
+                        y=i;
+                        x=j;
+                        return true;
+                    } else {
+                        map[i][j] = DOT_EMPTY;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public static boolean isMapFull() {
@@ -103,14 +143,46 @@ public class Lesson4X0GameApplication {
     }
 
     public static void aiTurn() {
-        int x, y;
-        do {
-            x = rand.nextInt(SIZE);
-            y = rand.nextInt(SIZE);
-        } while (!isCellValid(x, y));
-        System.out.println("Компьютер походил в точку " + (x + 1) + " " + (y + 1));
-        map[y][x] = DOT_O;
+               if (!tryToWin(DOT_O)) {
+            if (!tryToBlockWin(DOT_O, DOT_X)) {
+                               do {
+                    x = rand.nextInt(SIZE);
+                    y = rand.nextInt(SIZE);
+                } while (!isCellValid(x, y));
+                System.out.println("Компьютер походил в точку " + (x + 1) + " " + (y + 1));
+                map[y][x] = DOT_O;
+            }
+        }
     }
+
+
+
+//    public static void aiTurnClever() {
+//        int x, y;
+//        do {
+//            x = rand.nextInt(SIZE);
+//            y = rand.nextInt(SIZE);
+//        } while (!isCellValid(x, y));
+//        System.out.println("Компьютер походил в точку " + (x + 1) + " " + (y + 1));
+//        map[y][x] = DOT_O;
+//    }
+
+//    public static boolean tryToWin(){
+//        for
+//        return false;
+//    }
+//
+//    public static void aiTurn() {
+//        mapDraft = map.clone();
+//        tryToWin();
+//        int x, y;
+//        do {
+//            x = rand.nextInt(SIZE);
+//            y = rand.nextInt(SIZE);
+//        } while (!isCellValid(x, y));
+//        System.out.println("Компьютер походил в точку " + (x + 1) + " " + (y + 1));
+//        map[y][x] = DOT_O;
+//    }
 
     public static void humanTurn() {
         int x, y;
