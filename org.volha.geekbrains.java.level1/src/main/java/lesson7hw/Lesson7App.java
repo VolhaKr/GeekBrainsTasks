@@ -26,7 +26,7 @@ public class Lesson7App {
         for ( Cat catI : cat ) {
             catI.info();
         }
-        plate.increaseFood(100);
+        plate.increaseFood(110);
         plate.info();
         for ( Cat catI : cat ) {
             catI.eat(plate);
