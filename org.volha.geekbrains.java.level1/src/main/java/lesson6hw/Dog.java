@@ -12,9 +12,9 @@ public class Dog extends Animal {
             System.out.println("Distance cannot be negative");
         } else {
             if (distance <= maxSwimDistance) {
-                System.out.println(getClass().getSimpleName() + " " + name + " swam " + distance + "m");
+                System.out.println(getClass().getSimpleName() + " " + getName() + " swam " + distance + "m");
             } else {
-                System.out.println("Too much. " + getClass().getSimpleName() + " " + name + " cannot swim " + distance + "m");
+                System.out.println("Too much. " + getClass().getSimpleName() + " " + getName() + " cannot swim " + distance + "m");
             }
         }
     }
