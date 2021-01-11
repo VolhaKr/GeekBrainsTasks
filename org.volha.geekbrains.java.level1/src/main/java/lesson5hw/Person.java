@@ -32,7 +32,7 @@ public class Person {
         System.out.printf("%15s", phoneNumber);
         System.out.printf("%15d", salary);
         System.out.printf("%4d", age);
-        System.out.println();
+        System.out.println( );
 
     }
 }
