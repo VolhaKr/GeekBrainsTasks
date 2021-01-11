@@ -16,6 +16,7 @@ public class Lesson6MainApp {
         catBob.run(-10);
         catJack.run(150);
         catSam.run(350);
+        catJhon.swim(1);
         Dog dogBlack = new Dog("Black");
         Dog dogGrey = new Dog("Grey");
         Dog dogWhite = new Dog("White");
