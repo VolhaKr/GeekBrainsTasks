@@ -1,5 +1,5 @@
 package lesson4hw;
-
+//This the code from the lesson, a little bit improved
 import java.util.Random;
 import java.util.Scanner;
 

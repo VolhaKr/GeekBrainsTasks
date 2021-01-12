@@ -22,7 +22,7 @@ public class Lesson4X0GameApplication {
         while (true) {
             humanTurn();
             printMap();
-            if (checkWin(0, 0, SIZE, DOT_O)) {
+            if (checkWin(0, 0, SIZE, DOT_X)) {
                 System.out.println("Победил человек");
                 break;
             }

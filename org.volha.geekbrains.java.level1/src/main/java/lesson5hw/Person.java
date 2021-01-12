@@ -5,12 +5,12 @@ public class Person {
     //    Создать класс "Сотрудник" с полями: ФИО, должность, email, телефон, зарплата, возраст.
 //    Конструктор класса должен заполнять эти поля при создании объекта.
 //    Внутри класса «Сотрудник» написать метод, который выводит информацию об объекте в консоль.
-    String name;
-    String position;
-    String email;
-    String phoneNumber;
-    int salary;
-    int age;
+    private String name;
+    private String position;
+    private String email;
+    private String phoneNumber;
+    private int salary;
+    private int age;
 
     public Person(String name, String position, String email, String phoneNumber, int salary, int age) {
         this.name = name;
