@@ -37,31 +37,30 @@ public class MainApp {
                 new Robot("Robot1", 10, 20),
                 new Human("Ivan", 4, 2)
         };
-        Obstacle [] obstacles = {
+        Obstacle[] obstacles = {
                 new Wall(1),
                 new RunningTrack(4),
                 new Wall(3)
         };
         System.out.println("Training");
-   train (movingEntities, obstacles);
+        train(movingEntities, obstacles);
         System.out.println("Competitions");
-   compete (movingEntities, obstacles);
+        compete(movingEntities, obstacles);
     }
 
     private static void compete(Moving[] movingEntities, Obstacle[] obstacles) {
         boolean competeRezult;
         for ( Moving movingEntity : movingEntities ) {
             competeRezult = true;
-               for ( Obstacle obstacle : obstacles ) {
-               if (!obstacle.makeToOvercome(movingEntity)){
-                   competeRezult = false;
-                   break;
-               }
+            for ( Obstacle obstacle : obstacles ) {
+                if (!obstacle.makeToOvercome(movingEntity)) {
+                    competeRezult = false;
+                    break;
+                }
             }
             if (competeRezult == true) {
-                System.out.println(movingEntity.getClass().getSimpleName() + " "  + " overcame successfully! ");
-            }
-            else {
+                System.out.println(movingEntity.getClass().getSimpleName() + " " + " overcame successfully! ");
+            } else {
                 System.out.println(movingEntity.getClass().getSimpleName() + "  " + "failed to overcome...");
             }
         }
@@ -70,11 +69,11 @@ public class MainApp {
 
     private static void train(Moving[] movingEntities, Obstacle[] obstacles) {
         boolean trainRezult;
-                for ( Moving movingEntity : movingEntities ) {
-                for ( Obstacle obstacle : obstacles ) {
-                   trainRezult = obstacle.makeToOvercome(movingEntity);
-                }
+        for ( Moving movingEntity : movingEntities ) {
+            for ( Obstacle obstacle : obstacles ) {
+                trainRezult = obstacle.makeToOvercome(movingEntity);
             }
         }
     }
+}
 

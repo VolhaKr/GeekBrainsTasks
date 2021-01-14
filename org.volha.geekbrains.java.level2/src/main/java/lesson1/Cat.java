@@ -1,10 +1,10 @@
 package lesson1;
 
-public class Cat extends Entity{
+public class Cat extends Entity {
     public Cat(String name, int maxRun, int maxJump) {
         super(name, maxRun, maxJump);
     }
-};
+}
 //implements Runable, Jumpable {
 //    int maxRun;
 //    int maxJump;

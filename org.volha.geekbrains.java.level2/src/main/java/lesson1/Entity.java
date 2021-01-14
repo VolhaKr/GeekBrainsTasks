@@ -1,7 +1,7 @@
 package lesson1;
 
 public class Entity implements Jumpable, Runable {
-   String name;
+    String name;
     int maxRun;
     int maxJump;
 
@@ -15,30 +15,30 @@ public class Entity implements Jumpable, Runable {
         return name;
     }
 
-    void info(){
-        System.out.println(this.getClass() + name + " can run " +maxRun + " can jump " + maxJump);
-        }
+    void info() {
+        System.out.println(this.getClass() + name + " can run " + maxRun + " can jump " + maxJump);
+    }
 
-@Override
-public boolean run(int runDistance){
+    @Override
+    public boolean run(int runDistance) {
         if (runDistance <= this.maxRun) {
-        System.out.println(this.getClass().getSimpleName() + " " + name + " successfully ran " + runDistance);
-        return true;
+            System.out.println(this.getClass().getSimpleName() + " " + name + " successfully ran " + runDistance);
+            return true;
         } else {
-        System.out.println(this.getClass().getSimpleName() +  " " + name + " can't run " + runDistance + " it can only " + maxRun);
-        return false;
+            System.out.println(this.getClass().getSimpleName() + " " + name + " can't run " + runDistance + " it can only " + maxRun);
+            return false;
         }
-        }
+    }
 
-@Override
-public boolean jump(int jumpHeight){
+    @Override
+    public boolean jump(int jumpHeight) {
         if (jumpHeight <= this.maxJump) {
-        System.out.println(this.getClass().getSimpleName() + " " + name + " successfully jumped over " + jumpHeight);
-        return true;
+            System.out.println(this.getClass().getSimpleName() + " " + name + " successfully jumped over " + jumpHeight);
+            return true;
         } else {
-        System.out.println(this.getClass().getSimpleName() + " " + name + " can't jump over " + jumpHeight + " it can only " + maxJump);
-        return false;
+            System.out.println(this.getClass().getSimpleName() + " " + name + " can't jump over " + jumpHeight + " it can only " + maxJump);
+            return false;
         }
-        }
+    }
 
 }

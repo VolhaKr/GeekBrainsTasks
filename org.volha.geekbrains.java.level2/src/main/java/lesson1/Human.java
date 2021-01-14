@@ -1,10 +1,10 @@
 package lesson1;
 
-public class Human extends Entity{
+public class Human extends Entity {
     public Human(String name, int maxRun, int maxJump) {
         super(name, maxRun, maxJump);
     }
-};
+}
 //extends Entity implements Runable, Jumpable{
 //    String name;
 //    int maxRun;
