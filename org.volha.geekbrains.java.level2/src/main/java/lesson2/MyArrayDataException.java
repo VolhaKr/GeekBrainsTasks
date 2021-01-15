@@ -10,7 +10,7 @@ public class MyArrayDataException extends NumberFormatException {
     }
 
     public String getMessage() {
-        final String MyArrayDataException = "MyArrayDataException:" + " Wrong data for element " + "[" + i + "]" + "[" + j + "]";
+        final String MyArrayDataException = " Exception MyArrayDataException:" + " Wrong data for element " + "[" + i + "]" + "[" + j + "]";
         return MyArrayDataException;
     }
 }
