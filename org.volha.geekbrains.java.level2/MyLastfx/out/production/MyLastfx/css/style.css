@@ -1,0 +1,29 @@
+.root{
+    -fx-font-size: 16px;
+    -fx-background-image: url("https://cdn.videvo.net/videvo_files/video/free/2020-05/thumbnails/3d_ocean_1590675653_small.jpg");
+    -fx-background-size: 100% 100%;
+}
+
+.button{
+    -fx-background-color: yellow;
+}
+
+#btnAdd{
+    -fx-background-color: orange;
+}
+
+.button:hover{
+    -fx-font-size: 18px;
+    -fx-background-color: greenyellow;
+}
+
+.text-area{
+    -fx-background-color: #0000FF;
+    -fx-control-inner-background: #CCFFFF;
+    -fx-text-fill: #000099;
+    -fx-highlight-text-fill: #99CCFF;
+    -fx-highlight-fill: #FFFFCC;
+
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
