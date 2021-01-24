@@ -38,12 +38,12 @@ public class MainApp {
     public static void main(String[] args) {
         countWords(wordsArray);
         PhoneBook phoneBook = new PhoneBook();
-        phoneBook.putPhoneBookNumber("Uladzimir", 1111222333);
-        phoneBook.putPhoneBookNumber("Uladzimir", 1111222303);
-        phoneBook.putPhoneBookNumber("Gedymin", 1111522333);
-        phoneBook.putPhoneBookNumber("Alherd", 1111442333);
-        phoneBook.getPhoneBookNumber("Uladzimir");
-        phoneBook.getPhoneBookNumber("Ivan");
+        phoneBook.put("Uladzimir", 1111222333);
+        phoneBook.put("Uladzimir", 1111222303);
+        phoneBook.put("Gedymin", 1111522333);
+        phoneBook.put("Alherd", 1111442333);
+        phoneBook.get("Uladzimir");
+        phoneBook.get("Ivan");
 
     }
 

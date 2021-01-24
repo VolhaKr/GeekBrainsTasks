@@ -11,13 +11,13 @@ import java.util.*;
 
 public class PhoneBook {
     HashMap <String, List<Integer>> phoneBook = new HashMap<>();
-    public void putPhoneBookNumber(String name, int number) {
+    public void put(String name, int number) {
         List<Integer> tempNumberList = phoneBook.getOrDefault(name, new ArrayList<Integer>());
         tempNumberList.add(number);
         phoneBook.put(name, tempNumberList);
     }
 
-    public void getPhoneBookNumber(String name){
+    public void get(String name){
         System.out.println("Name " + name);
         System.out.println(" phone(s): ");
         try{
