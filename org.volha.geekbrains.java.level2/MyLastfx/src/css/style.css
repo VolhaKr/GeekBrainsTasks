@@ -1,20 +1,15 @@
 .root{
     -fx-font-size: 16px;
-    -fx-background-image: url("https://cdn.videvo.net/videvo_files/video/free/2020-05/thumbnails/3d_ocean_1590675653_small.jpg");
+    -fx-background-image: url("../resources/sun-between-clouds.jpg");
     -fx-background-size: 100% 100%;
 }
 
 .button{
-    -fx-background-color: yellow;
-}
-
-#btnAdd{
-    -fx-background-color: orange;
+    -fx-background-color: #CCFFFF;
 }
 
 .button:hover{
-    -fx-font-size: 18px;
-    -fx-background-color: greenyellow;
+    -fx-background-color: #33CCFF;
 }
 
 .text-area{
