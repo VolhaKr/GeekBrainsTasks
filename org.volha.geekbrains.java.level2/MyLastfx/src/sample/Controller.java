@@ -21,7 +21,8 @@ public class Controller {
 
         System.out.println("test") ;
     textArea.appendText(textField.getText() + "\n");
-    //textField.requestFocus();
+  // textField.requestFocus();
+   textField.clear();
     }
 
 
