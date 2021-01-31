@@ -24,7 +24,7 @@ public class Server {
             System.out.println("Server started");
 
             socket = server.accept();
-            System.out.println("Client connecte: " + socket.getRemoteSocketAddress());
+            System.out.println("Client connected: " + socket.getRemoteSocketAddress());
 
             inKeyboard = new Scanner(System.in);
             //PrintWriter outConsole = new PrintWriter(socket.getOutputStream(), true);
@@ -40,7 +40,10 @@ public class Server {
                         break;
                     }
                     try {
+                        System.out.println("String read from server" + strReadFromServer);
                         out.writeUTF(strReadFromServer);
+                       // out.flush();
+                        System.out.println("Hey" + out.toString());
                     } catch (IOException e) {
                         System.out.println("e1");
                         //  e.printStackTrace();
@@ -77,24 +80,21 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Client disconnected");
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                server.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            System.out.println("Client disconnected");
+//            try {
+//           //     socket.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                server.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
-    public static int getPort() {
-        return PORT;
 
-    }
 }
 
 

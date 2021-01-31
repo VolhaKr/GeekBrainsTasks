@@ -8,7 +8,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-import static lesson6.Server.getPort;
+import static java.lang.Thread.sleep;
+
 
 public class Client {
 
@@ -65,12 +66,17 @@ public class Client {
 //                    });
 //                    t3.start();
 //
-        Thread t4 = new Thread(() -> {
+      //  Thread t4 = new Thread(() -> {
             while (true) {
-                String strSentToClientScreen = null;
+                String strSentToClientString = "mom";
                 try {
-                    strSentToClientScreen = in.readUTF();
-                    System.out.println("Client: " + strSentToClientScreen);
+                    strSentToClientString = in.readUTF();
+                    try {
+                        sleep(50000000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Client: " + strSentToClientString);
                 } catch (IOException e) {
                     System.out.println("ex2");
                     // e.printStackTrace();
@@ -82,9 +88,9 @@ public class Client {
 //                    } catch (IOException e) {
 //                        e.printStackTrace();
 //                    }
-
-        });
-        t4.start();
+//
+//        });
+//        t4.start();
 
 //                } catch (IOException e) {
 //                    e.printStackTrace();
