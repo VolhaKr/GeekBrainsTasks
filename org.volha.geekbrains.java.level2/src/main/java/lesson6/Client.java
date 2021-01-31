@@ -3,17 +3,12 @@ package lesson6;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-import static java.lang.Thread.sleep;
-
-
 public class Client {
 
-    private static Socket socketClient;
+    public static Socket socketClient;
     private static String IP_ADRESS = "localhost";
     private static final int PORT = 8189;
     private static DataInputStream in;
@@ -28,86 +23,62 @@ public class Client {
         }
         System.out.println("Client opened connection to server " + IP_ADRESS + " " + PORT);
 
-        //         inKeyboard = new Scanner(System.in);
-        //PrintWriter outConsole = new PrintWriter(socket.getOutputStream(), true)
-
+        inKeyboard = new Scanner(System.in);
         try {
             in = new DataInputStream(socketClient.getInputStream());
         } catch (IOException ioException) {
-            System.out.println("exception");
-            //  ioException.printStackTrace();
+            ioException.printStackTrace();
         }
-//        try {
-//            out = new DataOutputStream(socket.getOutputStream());
-//        } catch (IOException ioException) {
-//            ioException.printStackTrace();
-//        }
-//        Thread t3 = new Thread(() -> {
-//                        while (true) {
-//                            String strReadFromClient = null;
-//                            strReadFromClient = inKeyboard.nextLine();
-//                            if (strReadFromClient.equals("/end")) {
-//                                break;
-//                            }
-//                            if (!strReadFromClient.equals(null)) {
-//                                try {
-//                                    out.writeUTF(strReadFromClient);
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                            //    System.out.println("Client: " + str);
-////                    try {
-////                        out.writeUTF("echo: " + str);
-////                    } catch (IOException e) {
-////                        e.printStackTrace();
-////                    }
-//                        }
-//                    });
-//                    t3.start();
-//
-      //  Thread t4 = new Thread(() -> {
+        try {
+            out = new DataOutputStream(socketClient.getOutputStream());
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+        Thread readFromConsole = new Thread(() -> {
             while (true) {
-                String strSentToClientString = "mom";
+                String strReadFromClient;
+                strReadFromClient = inKeyboard.nextLine();
+                try {
+                    System.out.println("String read from client " + strReadFromClient);
+                    out.writeUTF(strReadFromClient);
+                    if (strReadFromClient.equals("/end")) {
+                        break;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                    System.out.println("Client disconnected");
+                    out.writeUTF("/end");
+                    socketClient.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        readFromConsole.start();
+
+        Thread writeToConsole = new Thread(() -> {
+            while (true) {
+                String strSentToClientString = null;
                 try {
                     strSentToClientString = in.readUTF();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (strSentToClientString.equals("/end")) {
                     try {
-                        sleep(50000000);
-                    } catch (InterruptedException e) {
+                        socketClient.close();
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("Client: " + strSentToClientString);
-                } catch (IOException e) {
-                    System.out.println("ex2");
-                    // e.printStackTrace();
+                    break;
                 }
-
+                System.out.println("String received from server " + strSentToClientString);
             }
-//                    try {
-//                        out.writeUTF("echo: " + str);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//        });
-//        t4.start();
-
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    System.out.println("Client disconnected");
-//                    try {
-//                        socket.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    try {
-//                        server.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
+        });
+        writeToConsole.start();
     }
-
-
 }
 

@@ -3,7 +3,6 @@ package lesson6;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -17,7 +16,6 @@ public class Server {
     private static DataOutputStream out;
     private static Scanner inKeyboard;
 
-
     public static void main(String[] args) {
         try {
             server = new ServerSocket(PORT);
@@ -27,105 +25,65 @@ public class Server {
             System.out.println("Client connected: " + socket.getRemoteSocketAddress());
 
             inKeyboard = new Scanner(System.in);
-            //PrintWriter outConsole = new PrintWriter(socket.getOutputStream(), true);
 
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
 
-            Thread t1 = new Thread(() -> {
+            Thread readFromConsole = new Thread(() -> {
                 while (true) {
                     String strReadFromServer = null;
                     strReadFromServer = inKeyboard.nextLine();
+                    try {
+                        System.out.println("String read from server " + strReadFromServer);
+                        out.writeUTF(strReadFromServer);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (strReadFromServer.equals("/end")) {
                         break;
                     }
-                    try {
-                        System.out.println("String read from server" + strReadFromServer);
-                        out.writeUTF(strReadFromServer);
-                       // out.flush();
-                        System.out.println("Hey" + out.toString());
-                    } catch (IOException e) {
-                        System.out.println("e1");
-                        //  e.printStackTrace();
-                    }
-
-                    //    System.out.println("Client: " + str);
-//                    try {
-//                        out.writeUTF("echo: " + str);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
                 }
             });
-            t1.start();
+            readFromConsole.start();
+            try {
+                readFromConsole.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                socket.close();
+                server.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
 
-//            Thread t2 = new Thread(() -> {
-//                while (true) {
-//                    String strReceivedFromClient = null;
-//                    try {
-//                        strReceivedFromClient = in.readUTF();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    System.out.println("Client: " + strReceivedFromClient);
-////                    try {
-////                        out.writeUTF("echo: " + str);
-////                    } catch (IOException e) {
-////                        e.printStackTrace();
-////                    }
+            Thread writeToConsole = new Thread(() -> {
+                while (true) {
+                    String strSentFromClient = null;
+                    try {
+                        strSentFromClient = in.readUTF();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("String received from client" + strSentFromClient);
+                    if (strSentFromClient.equals("/end")) {
+                        break;
+                    }
+                }
+//                try {
+//                    socket.close();
+//                    server.close();
 //                }
-//            });
-//            t2.start();
+//                catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+            });
+            writeToConsole.start();
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-//            System.out.println("Client disconnected");
-//            try {
-//           //     socket.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            try {
-//                server.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         }
     }
-
-
 }
-
-
-//        try {
-//            server = new ServerSocket(PORT);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("Server started");
-//
-//            socket= server.accept();
-//            System.out.println("Client connecte: "+socket.getRemoteSocketAddress());
-//
-//        try {
-//            in = new DataInputStream(socket.getInputStream());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            out = new DataOutputStream(socket.getOutputStream());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-////            in = new Scanner(socket.getInputStream());
-////            out = new PrintWriter(socket.getOutputStream(), true);
-//
-//            new Thread(() -> {
-//
-//            }.start();
-//    }
-//}
-
 
