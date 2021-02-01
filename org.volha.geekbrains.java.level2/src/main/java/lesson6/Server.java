@@ -49,24 +49,11 @@ public class Server {
                     System.out.println("Server connection to client closed");
                     server.close();
                     System.out.println("Server closed");
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
             readFromConsole.start();
-//            try {
-//                readFromConsole.join();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            try {
-//                socket.close();
-//                server.close();
-//            }
-//            catch (IOException e) {
-//                e.printStackTrace();
-//            }
 
             Thread writeToConsole = new Thread(() -> {
                 while (true) {
@@ -87,8 +74,7 @@ public class Server {
                     System.out.println("Server connection to client closed");
                     server.close();
                     System.out.println("Server closed");
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             });

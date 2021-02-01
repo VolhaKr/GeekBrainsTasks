@@ -51,14 +51,14 @@ public class Client {
                 }
             }
             try {
-                    System.out.println("Client disconnected");
-                    out.writeUTF("/end");
-                    socketClient.close();
+                System.out.println("Client disconnected");
+                out.writeUTF("/end");
+                socketClient.close();
                 System.out.println("Socket closed");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         readFromConsole.start();
 
         Thread writeToConsole = new Thread(() -> {
