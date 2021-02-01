@@ -31,32 +31,42 @@ public class Server {
 
             Thread readFromConsole = new Thread(() -> {
                 while (true) {
-                    String strReadFromServer = null;
+                    String strReadFromServer;
                     strReadFromServer = inKeyboard.nextLine();
                     try {
                         System.out.println("String read from server " + strReadFromServer);
                         out.writeUTF(strReadFromServer);
                     } catch (IOException e) {
                         e.printStackTrace();
+                        break;
                     }
                     if (strReadFromServer.equals("/end")) {
                         break;
                     }
                 }
+                try {
+                    socket.close();
+                    System.out.println("Server connection to client closed");
+                    server.close();
+                    System.out.println("Server closed");
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
             readFromConsole.start();
-            try {
-                readFromConsole.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                socket.close();
-                server.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                readFromConsole.join();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                socket.close();
+//                server.close();
+//            }
+//            catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
             Thread writeToConsole = new Thread(() -> {
                 while (true) {
@@ -65,19 +75,22 @@ public class Server {
                         strSentFromClient = in.readUTF();
                     } catch (IOException e) {
                         e.printStackTrace();
+                        break;
                     }
                     System.out.println("String received from client" + strSentFromClient);
                     if (strSentFromClient.equals("/end")) {
                         break;
                     }
                 }
-//                try {
-//                    socket.close();
-//                    server.close();
-//                }
-//                catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    socket.close();
+                    System.out.println("Server connection to client closed");
+                    server.close();
+                    System.out.println("Server closed");
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
             writeToConsole.start();
 

@@ -47,12 +47,14 @@ public class Client {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    break;
                 }
             }
             try {
                     System.out.println("Client disconnected");
                     out.writeUTF("/end");
                     socketClient.close();
+                System.out.println("Socket closed");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
