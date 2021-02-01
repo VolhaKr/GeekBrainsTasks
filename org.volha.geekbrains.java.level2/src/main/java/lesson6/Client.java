@@ -21,15 +21,10 @@ public class Client {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        System.out.println("Client opened connection to server " + IP_ADRESS + " " + PORT);
-
+        System.out.println("Client opened connection to server " + IP_ADRESS + "  " + PORT);
         inKeyboard = new Scanner(System.in);
         try {
             in = new DataInputStream(socketClient.getInputStream());
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        try {
             out = new DataOutputStream(socketClient.getOutputStream());
         } catch (IOException ioException) {
             ioException.printStackTrace();
@@ -50,14 +45,7 @@ public class Client {
                     break;
                 }
             }
-            try {
-                System.out.println("Client disconnected");
-                out.writeUTF("/end");
-                socketClient.close();
-                System.out.println("Socket closed");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
         });
         readFromConsole.start();
 

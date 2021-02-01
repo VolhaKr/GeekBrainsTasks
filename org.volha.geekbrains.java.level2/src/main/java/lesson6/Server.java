@@ -46,9 +46,9 @@ public class Server {
                 }
                 try {
                     socket.close();
-                    System.out.println("Server connection to client closed");
+                    System.out.println("Server connection to client closed.");
                     server.close();
-                    System.out.println("Server closed");
+                    System.out.println("Server closed.");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
