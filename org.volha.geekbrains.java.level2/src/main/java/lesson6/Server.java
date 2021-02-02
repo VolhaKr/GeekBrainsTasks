@@ -9,6 +9,7 @@ import java.net.SocketException;
 import java.util.Scanner;
 
 public class Server {
+    public static boolean connected = true;
     private static ServerSocket server;
     private static Socket socket;
     private static final int PORT = 8189;
@@ -30,7 +31,7 @@ public class Server {
             out = new DataOutputStream(socket.getOutputStream());
 
             Thread readFromConsole = new Thread(() -> {
-                while (true) {
+                while (connected) {
                     String strReadFromServer;
                     strReadFromServer = inKeyboard.nextLine();
                     try {
@@ -38,37 +39,60 @@ public class Server {
                         out.writeUTF(strReadFromServer);
                     } catch (IOException e) {
                         e.printStackTrace();
-                        break;
+                       // connected = false;
                     }
                     if (strReadFromServer.equals("/end")) {
-                        break;
+                        connected = false;
                     }
                 }
-                try {
-                    socket.close();
-                    System.out.println("Server connection to client closed");
-                    server.close();
-                    System.out.println("Server closed");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    socket.close();
+//                    System.out.println("Server connection to client closed.");
+//                    server.close();
+//                    System.out.println("Server closed.");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             });
             readFromConsole.start();
 
             Thread writeToConsole = new Thread(() -> {
-                while (true) {
+                while (connected) {
                     String strSentFromClient = null;
                     try {
                         strSentFromClient = in.readUTF();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        break;
+                        //connected = false;
                     }
                     System.out.println("String received from client" + strSentFromClient);
                     if (strSentFromClient.equals("/end")) {
-                        break;
+                        connected = false;
                     }
                 }
+//                try {
+//                    socket.close();
+//                    System.out.println("Server connection to client closed");
+//                    server.close();
+//                    System.out.println("Server closed");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+            });
+            writeToConsole.start();
+            try {
+                readFromConsole.join();
+                writeToConsole.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        finally {
+            if (!connected){
                 try {
                     socket.close();
                     System.out.println("Server connection to client closed");
@@ -77,11 +101,7 @@ public class Server {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            });
-            writeToConsole.start();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            }
         }
     }
 }

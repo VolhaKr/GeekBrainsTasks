@@ -21,66 +21,66 @@ public class Client {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        System.out.println("Client opened connection to server " + IP_ADRESS + " " + PORT);
-
+        System.out.println("Client opened connection to server " + IP_ADRESS + "  " + PORT);
         inKeyboard = new Scanner(System.in);
         try {
             in = new DataInputStream(socketClient.getInputStream());
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        try {
             out = new DataOutputStream(socketClient.getOutputStream());
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
 
         Thread readFromConsole = new Thread(() -> {
-            while (true) {
+            while (Server.connected) {
                 String strReadFromClient;
                 strReadFromClient = inKeyboard.nextLine();
                 try {
                     System.out.println("String read from client " + strReadFromClient);
                     out.writeUTF(strReadFromClient);
                     if (strReadFromClient.equals("/end")) {
-                        break;
+                        Server.connected = false;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    break;
+                   // Server.connected = false;
+                    //break;
                 }
             }
-            try {
-                System.out.println("Client disconnected");
-                out.writeUTF("/end");
-                socketClient.close();
-                System.out.println("Socket closed");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
         });
         readFromConsole.start();
 
         Thread writeToConsole = new Thread(() -> {
-            while (true) {
+            while (Server.connected) {
                 String strSentToClientString = null;
                 try {
                     strSentToClientString = in.readUTF();
                 } catch (IOException e) {
                     e.printStackTrace();
+                 //   Server.connected = false;
                 }
                 if (strSentToClientString.equals("/end")) {
-                    try {
-                        socketClient.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    break;
+                    Server.connected = false;
+                    //break;
                 }
                 System.out.println("String received from server " + strSentToClientString);
             }
         });
         writeToConsole.start();
+        try {
+            readFromConsole.join();
+            writeToConsole.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (!Server.connected){
+            try {
+                socketClient.close();
+                System.out.println("Client disconnected");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
