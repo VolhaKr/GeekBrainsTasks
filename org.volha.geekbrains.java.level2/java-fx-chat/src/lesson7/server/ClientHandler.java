@@ -61,7 +61,7 @@ import java.net.Socket;
                                 server.sendMsgToUser(this, token[1], token[2]);
                                 }
                                 catch (Exception e){
-                                    out.writeUTF("Wrong");
+                                    out.writeUTF("from Admin - wrong data");
                                 }
                             }
                             else {
