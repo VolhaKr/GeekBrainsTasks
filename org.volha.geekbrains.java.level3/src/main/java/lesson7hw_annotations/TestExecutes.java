@@ -17,7 +17,7 @@ public class TestExecutes {
         System.out.println("Test  5 run");
     }
 
-       @AfterSuit
+    @AfterSuit
     public static void testAfterSuit(){
         System.out.println("@AfterSuit executed");
     }

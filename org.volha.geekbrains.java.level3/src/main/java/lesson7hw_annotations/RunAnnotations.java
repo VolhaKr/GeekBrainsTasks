@@ -28,7 +28,7 @@ public class RunAnnotations {
         }
         if (countBeforeSuit == 1) {
             try {
-                methodBeforeSuit.invoke(TestExecutes.class);
+                methodBeforeSuit.invoke(ClassToRunTests);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
@@ -42,6 +42,7 @@ public class RunAnnotations {
 
         for ( Method m : methods ) {
             if (m.getAnnotation(Test.class) != null) {
+                System.out.println("Test must be executed");
                 try {
                     m.invoke(ClassToRunTests);
                 } catch (IllegalAccessException e) {
