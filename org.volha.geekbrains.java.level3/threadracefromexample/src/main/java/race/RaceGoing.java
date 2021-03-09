@@ -29,24 +29,19 @@ public class RaceGoing implements Runnable {
         }
 
         try {
-            RaceGoing.newBarrier.await();
+            newBarrier.await();
         } catch (InterruptedException | BrokenBarrierException e) {
             e.printStackTrace();
         }
         System.out.println("Race begun");
-
-        // Resetting the newBarrier
-        newBarrier.reset();
-        System.out.println("Barrier reset successful");
-        //RaceGoing.newBarrier.await();
-//        try {
-//            newFinishBarrier.await();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (BrokenBarrierException e) {
-//            e.printStackTrace();
-//        }
-
+        try {
+            newBarrier.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (BrokenBarrierException e) {
+            e.printStackTrace();
+        }
+        System.out.println("The race is finished");
     }
 }
 

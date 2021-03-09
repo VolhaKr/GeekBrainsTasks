@@ -15,16 +15,5 @@ public class MainClass {
 
         Thread t1 = new Thread(raceGoing);
         t1.start();
-//        try {
-//            RaceGoing.newFinishBarrier.await();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (BrokenBarrierException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("FIN");
-//        t1.join();
-//        System.out.println("FINISH");
-        //  System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка закончилась!!!");
     }
 }

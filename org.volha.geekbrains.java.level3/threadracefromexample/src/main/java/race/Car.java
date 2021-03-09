@@ -2,6 +2,8 @@ package race;
 
 //import static race.MainClass.cbStartRace;
 
+import java.util.concurrent.BrokenBarrierException;
+
 import static race.RaceGoing.newBarrier;
 
 public class Car implements Runnable {
@@ -42,6 +44,13 @@ public class Car implements Runnable {
         }
         for ( Stage stage : race.getStages() ) {
             stage.go(this);
+        }
+        try {
+            newBarrier.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (BrokenBarrierException e) {
+            e.printStackTrace();
         }
     }
 }
