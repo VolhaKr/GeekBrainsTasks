@@ -42,14 +42,14 @@ public class Server {
 
     public void broadcastMsg(ClientHandler clientHandler, String msg) {
         String message = String.format("[ %s ]: %s", clientHandler.getNickname(), msg);
-        for (ClientHandler c : clients) {
+        for ( ClientHandler c : clients ) {
             c.sendMsg(message);
         }
     }
 
     public void privateMsg(ClientHandler sender, String receiver, String msg) {
         String message = String.format("[ %s ] to [ %s ]: %s", sender.getNickname(), receiver, msg);
-        for (ClientHandler c : clients) {
+        for ( ClientHandler c : clients ) {
             if (c.getNickname().equals(receiver)) {
                 c.sendMsg(message);
                 if (!c.equals(sender)) {
@@ -76,7 +76,7 @@ public class Server {
     }
 
     public boolean isLoginAuthenticated(String login) {
-        for (ClientHandler c : clients) {
+        for ( ClientHandler c : clients ) {
             if (c.getLogin().equals(login)) {
                 return true;
             }
@@ -87,13 +87,13 @@ public class Server {
     public void broadcastClientList() {
         StringBuilder sb = new StringBuilder(Command.CLIENT_LIST);
 
-        for (ClientHandler c : clients) {
+        for ( ClientHandler c : clients ) {
             sb.append(" ").append(c.getNickname());
         }
 
         String msg = sb.toString();
 
-        for (ClientHandler c : clients) {
+        for ( ClientHandler c : clients ) {
             c.sendMsg(msg);
         }
     }

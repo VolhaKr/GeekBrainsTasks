@@ -4,43 +4,14 @@ import java.sql.*;
 
 public class DBMain {
 
-
     private static Connection connection;
     private static Statement stmt;
     private static PreparedStatement psInsert;
 
-   // public static void main(String[] args) {
-   {
-       try {
-           connect();
-//            clearTable();
-//            fillTable();
-           System.out.println("db connected");
-           //  clearTable();
-           //   prepareAllStatements();
-           //exRollback();
-
-       } catch (Exception e) {
-           e.printStackTrace();
-       } finally {
-           disconnect();
-       }
-   }
-  // }
-
-//        private static void exRollback() throws SQLException {
-//            stmt.executeUpdate("INSERT INTO students (name, score) VALUES ('Bob1', 85);");
-//            Savepoint sp1 = connection.setSavepoint();
-//            stmt.executeUpdate("INSERT INTO students (name, score) VALUES ('Bob2', 85);");
-//            connection.rollback(sp1);
-//            stmt.executeUpdate("INSERT INTO students (name, score) VALUES ('Bob3', 85);");
-//            connection.setAutoCommit(true);
-//        }
-
     private static void fillTableBatch() throws SQLException {
         long begin = System.currentTimeMillis();
         connection.setAutoCommit(false);
-        for (int i = 1; i <= 1000; i++) {
+        for ( int i = 1; i <= 1000; i++ ) {
             psInsert.setString(1, "Bob " + i);
             psInsert.setInt(2, i * 15 % 100);
 
@@ -56,7 +27,7 @@ public class DBMain {
         long begin = System.currentTimeMillis();
         connection.setAutoCommit(false);
         prepareAllStatements();
-        for (int i = 1; i <= 5; i++) {
+        for ( int i = 1; i <= 5; i++ ) {
             psInsert.setString(1, "Bob " + i);
             psInsert.setString(2, "123");
             psInsert.setString(3, "Bob " + i);
@@ -74,30 +45,6 @@ public class DBMain {
     private static void clearTable() throws SQLException {
         stmt.executeUpdate("DELETE FROM users;");
     }
-    //CRUD create read update delete
-//        private static void exSelect() throws SQLException {
-//            ResultSet rs = stmt.executeQuery("SELECT name, score FROM students WHERE score > 80;");
-//
-//            while (rs.next()) {
-//                System.out.println(rs.getString("name") + " " + rs.getInt("score"));
-//            }
-//
-//            rs.close();
-//        }
-//
-//        private static void clearTable() throws SQLException {
-//            stmt.executeUpdate("DELETE FROM students;");
-//        }
-//
-//        private static void exDelete() throws SQLException {
-//            stmt.executeUpdate("DELETE FROM students WHERE score <= 40;");
-//        }
-//
-//        private static void exUpdate() throws SQLException {
-//            stmt.executeUpdate("UPDATE students SET score = 100 WHERE score >=85;");
-////        UPDATE students SET score = 90 WHERE (score >=85) AND (name='Bob6');
-////        UPDATE students SET score = 90 WHERE (score >=85) OR (name='Bob6');
-//        }
 
     private static void exInsertMore() throws SQLException {
         stmt.executeUpdate("INSERT INTO students (name, score) VALUES ('Bob4', 75),('Bob5', 35),('Bob6', 95);");
@@ -126,21 +73,17 @@ public class DBMain {
         }
     }
 
-
     public static String selectNicknameByLoginAndPassword(String login, String password) {
-        String nick=null;
-        String query = String.format("SELECT nickname FROM users WHERE login = '%s' & password = '%s';", login, password);
+        String nick = null;
+        String query = String.format("SELECT * FROM users WHERE login = '%s' and password = '%s';", login, password);
         ResultSet rs = null;
-        try  {
+        try {
             rs = stmt.executeQuery(query);
-
             if (rs.next()) {
-                nick = rs.getString("nick");
-                System.out.println("Gotten nickname "+ nick);
+                nick = rs.getString("nickname");
             } else {
                 nick = null;
             }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -152,45 +95,43 @@ public class DBMain {
         return nick;
     }
 
-    public static void addUser(String qwe, String qwe1, String qwe2) {
-
-    }
-
     public static boolean selectLogin(String login) throws SQLException {
-       ResultSet rs = stmt.executeQuery("SELECT FROM users WHERE login = " + login + ";");
-      //  SELECT nick FROM users WHERE login = '%s'& password = '%s');
-if (rs.next()) {
-    rs.close();
-                return  true;
-            }
-
-            rs.close();
-return false;
-        }
-
-    public static boolean selectNickName(String nickname) throws SQLException {
-        ResultSet rs = stmt.executeQuery("SELECT FROM users WHERE nickname =  " + nickname + ";");
+        String query = String.format("SELECT * FROM users WHERE login = '%s' ;", login);
+        System.out.println(query);
+        ResultSet rs = stmt.executeQuery(query);
+        System.out.println("result set" + rs);
         if (rs.next()) {
             rs.close();
-            return  true;
+            System.out.println("true");
+            return true;
         }
+        rs.close();
+        System.out.println("false");
+        return false;
+    }
 
+    public static boolean selectNickName(String nickname) throws SQLException {
+        String query = String.format("SELECT * FROM users WHERE nickname = '%s' ;", nickname);
+        ResultSet rs = stmt.executeQuery(query);
+        if (rs.next()) {
+            rs.close();
+            return true;
+        }
         rs.close();
         return false;
     }
 
-    public static void add (String login, String password, String nickname) throws SQLException {
+    public static void addUser(String login, String password, String nickname) throws SQLException {
         connection.setAutoCommit(false);
         prepareAllStatements();
-           psInsert.setString(1, login);
-            psInsert.setString(2, password);
-            psInsert.setString(3, nickname);
-            psInsert.executeUpdate();
+        psInsert.setString(1, login);
+        psInsert.setString(2, password);
+        psInsert.setString(3, nickname);
+        psInsert.executeUpdate();
         connection.commit();
 
     }
-
-    }
+}
 
 
 

@@ -24,10 +24,11 @@ public class RegController {
         controller.tryToReg(login, password, nickname);
     }
 
-    public void regOk(){
+    public void regOk() {
         textArea.appendText("Регистрация прошла успешно\n");
     }
-    public void regNo(){
+
+    public void regNo() {
         textArea.appendText("Логин или никнейм уже заняты\n");
     }
 

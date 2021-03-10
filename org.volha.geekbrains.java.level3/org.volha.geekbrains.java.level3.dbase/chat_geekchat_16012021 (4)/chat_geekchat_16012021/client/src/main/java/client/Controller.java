@@ -143,7 +143,7 @@ public class Controller implements Initializable {
                                 String[] tokens = str.split("\\s");
                                 Platform.runLater(() -> {
                                     clientList.getItems().clear();
-                                    for (int i = 1; i < tokens.length; i++) {
+                                    for ( int i = 1; i < tokens.length; i++ ) {
                                         clientList.getItems().add(tokens[i]);
                                     }
                                 });

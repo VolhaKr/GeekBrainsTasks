@@ -23,15 +23,15 @@ public class SimpleAuthService implements AuthService {
         users.add(new UserData("qwe", "qwe", "qwe"));
         users.add(new UserData("asd", "asd", "asd"));
         users.add(new UserData("zxc", "zxc", "zxc"));
-        for (int i = 1; i < 10; i++) {
+        for ( int i = 1; i < 10; i++ ) {
             users.add(new UserData("user" + i, "pass" + i, "nick" + i));
         }
     }
 
     @Override
     public String getNicknameByLoginAndPassword(String login, String password) {
-        for (UserData user : users) {
-            if(user.login.equals(login) && user.password.equals(password)){
+        for ( UserData user : users ) {
+            if (user.login.equals(login) && user.password.equals(password)) {
                 return user.nickname;
             }
         }
@@ -40,8 +40,8 @@ public class SimpleAuthService implements AuthService {
 
     @Override
     public boolean registration(String login, String password, String nickname) {
-        for (UserData user : users) {
-            if(user.login.equals(login) || user.nickname.equals(nickname)){
+        for ( UserData user : users ) {
+            if (user.login.equals(login) || user.nickname.equals(nickname)) {
                 return false;
             }
         }
