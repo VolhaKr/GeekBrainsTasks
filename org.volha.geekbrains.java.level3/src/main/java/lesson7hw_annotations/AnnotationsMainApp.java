@@ -26,8 +26,10 @@ public class AnnotationsMainApp {
 
     public static void main(String[] args) {
         try {
-            RunAnnotations.run("lesson7hw_annotations.TestExecutes");
-        } catch (ClassNotFoundException e) {
+            RunAnnotations.run ("lesson7hw_annotations.TestExecutes");
+            RunAnnotations.run("lesson7hw_annotations.TestThrowsException");
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
